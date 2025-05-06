@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>漢方体質チェック</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; max-width: 600px; margin: auto; }
+    .question { margin-bottom: 1em; }
+    button { padding: 0.5em 1em; }
+  </style>
+</head>
+<body>
+  <h1>漢方体質チェック</h1>
+  <form id="checkForm">
+    <div class="question">1. 手足や腰がよく冷える<br><input type="checkbox" name="q1"></div>
+    <div class="question">2. 寒い季節や冷房で症状が悪化しやすい<br><input type="checkbox" name="q2"></div>
+    <div class="question">3. 朝起きるのがつらく、日中も疲れやすい<br><input type="checkbox" name="q3"></div>
+    <div class="question">4. 風邪をひきやすく、治りにくい<br><input type="checkbox" name="q4"></div>
+    <div class="question">5. 食欲にムラがある、または少ない<br><input type="checkbox" name="q5"></div>
+    <div class="question">6. むくみやすい（特に手足や顔）<br><input type="checkbox" name="q6"></div>
+    <div class="question">7. 便秘または下痢になりやすい<br><input type="checkbox" name="q7"></div>
+    <div class="question">8. 肩こりや腰痛が慢性的にある<br><input type="checkbox" name="q8"></div>
+    <div class="question">9. 顔色が悪く、唇や舌が暗い色をしていると感じる<br><input type="checkbox" name="q9"></div>
+    <div class="question">10. ストレスや緊張で症状が悪化することがある<br><input type="checkbox" name="q10"></div>
+    <div class="question">11. 気候の変化で体調を崩しやすい（例：雨の日の頭痛）<br><input type="checkbox" name="q11"></div>
+    <div class="question">12. 関節や筋肉に痛みや重だるさを感じる<br><input type="checkbox" name="q12"></div>
+    <div class="question">13. 寝つきが悪い、または途中で目が覚める<br><input type="checkbox" name="q13"></div>
+    <div class="question">14. イライラしやすく、落ち着かないことがある<br><input type="checkbox" name="q14"></div>
+    <div class="question">15. 顔や手足がほてりやすい、のぼせることがある<br><input type="checkbox" name="q15"></div>
+    <button type="button" onclick="analyze()">診断する</button>
+  </form>
+
+  <h2>結果</h2>
+  <div id="result"></div>
+
+  <script>
+    function analyze() {
+      const form = document.forms["checkForm"];
+      let score = 0;
+      for (let i = 1; i <= 15; i++) {
+        if (form["q" + i].checked) score++;
+      }
+
+      let resultText = "";
+      if (score <= 4) {
+        resultText = "体質の偏りは少ないようです。生活習慣の改善で整いやすい体質です。";
+      } else if (score <= 8) {
+        resultText = "軽度の体質的アンバランスが見られます。『当帰芍薬散』『桂枝加朮附湯』などの漢方が適応になることがあります。";
+      } else {
+        resultText = "体質的な不調が強めに出ている可能性があります。『疎経活血湯』や体質改善系の漢方の適応が考えられます。専門家に相談されることをおすすめします。";
+      }
+
+      document.getElementById("result").textContent = resultText;
+    }
+  </script>
+</body>
+</html>
