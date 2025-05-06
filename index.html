@@ -4,63 +4,69 @@
 <head>
   <meta charset="UTF-8">
   <title>腱鞘炎に効く漢方薬のチェック</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: sans-serif; padding: 2em; max-width: 700px; margin: auto; }
-    .question { margin-bottom: 1em; }
+    body { font-family: sans-serif; padding: 1em; max-width: 700px; margin: auto; }
     .kanpo-list { background-color: #eef; padding: 1em; border-radius: 8px; margin-bottom: 2em; }
-    button { padding: 0.5em 1em; }
+    .question { margin-bottom: 1em; font-size: 1.2em; }
+    input[type="checkbox"] { transform: scale(1.5); margin-right: 0.5em; }
+    button { padding: 1em 2em; font-size: 1.2em; margin-top: 1em; }
   </style>
 </head>
 <body>
   <h1>腱鞘炎に効く漢方薬のチェック</h1>
 
   <div class="kanpo-list">
-    <h2>代表的な漢方薬一覧</h2>
+    <h2>代表的な漢方薬（ふりがな付き）</h2>
     <ul>
-      <li>桂枝加朮附湯（冷えや慢性の痛みに）</li>
-      <li>当帰芍薬散（血行不良やむくみ、女性体質に）</li>
-      <li>疎経活血湯（痛み・しびれ・血流障害に）</li>
+      <li><strong>疎経活血湯（そけいかっけつとう）</strong>：慢性の痛み、血行不良、しびれなどに</li>
+      <li><strong>桂枝加朮附湯（けいしかじゅつぶとう）</strong>：冷え・虚弱な体質、慢性痛に</li>
+      <li><strong>独活葛根湯（どっかつかっこんとう）</strong>：肩～手首のこわばりや疲労に</li>
+      <li><strong>当帰芍薬散（とうきしゃくやくさん）</strong>：女性の冷え・むくみ・血虚に</li>
+      <li><strong>五積散（ごしゃくさん）</strong>：冷え、疲れ、ストレス、むくみなど多症状に</li>
     </ul>
   </div>
 
   <form id="checkForm">
-    <div class="question">1. 冷えると腱鞘炎の痛みが強くなる<br><input type="checkbox" name="q1"></div>
-    <div class="question">2. 温めると症状がやわらぐ<br><input type="checkbox" name="q2"></div>
-    <div class="question">3. 疲れると痛みやこわばりが出やすい<br><input type="checkbox" name="q3"></div>
-    <div class="question">4. 手首・指を酷使している<br><input type="checkbox" name="q4"></div>
-    <div class="question">5. 体力があまりないと感じる<br><input type="checkbox" name="q5"></div>
-    <div class="question">6. 関節がこわばったり、重だるい<br><input type="checkbox" name="q6"></div>
-    <div class="question">7. 肩こり・腰痛がある<br><input type="checkbox" name="q7"></div>
-    <div class="question">8. 手足の冷えやむくみがある<br><input type="checkbox" name="q8"></div>
-    <div class="question">9. ストレスや睡眠不足で悪化しやすい<br><input type="checkbox" name="q9"></div>
-    <div class="question">10. 月経痛や冷え症などもある（女性）<br><input type="checkbox" name="q10"></div>
-    <!-- 追加の具体的な症状 -->
-    <div class="question">11. 指の腫れ・圧痛がある<br><input type="checkbox" name="q11"></div>
-    <div class="question">12. 朝に手のこわばりを感じる<br><input type="checkbox" name="q12"></div>
-    <div class="question">13. 動かし始めに痛みが強いが、動かしていると軽くなる<br><input type="checkbox" name="q13"></div>
-    <div class="question">14. 関節に熱感がある（熱っぽい）<br><input type="checkbox" name="q14"></div>
+    <div class="question"><label><input type="checkbox" name="q1">手首を酷使する仕事をしている</label></div>
+    <div class="question"><label><input type="checkbox" name="q2">冷えると痛みが強くなる</label></div>
+    <div class="question"><label><input type="checkbox" name="q3">温めると症状がやわらぐ</label></div>
+    <div class="question"><label><input type="checkbox" name="q4">体力があまりない、疲れやすい</label></div>
+    <div class="question"><label><input type="checkbox" name="q5">肩や腕、手首がこわばる・動かしにくい</label></div>
+    <div class="question"><label><input type="checkbox" name="q6">関節や筋肉がだるい・重い</label></div>
+    <div class="question"><label><input type="checkbox" name="q7">手や足がむくみやすい</label></div>
+    <div class="question"><label><input type="checkbox" name="q8">冷え性である</label></div>
+    <div class="question"><label><input type="checkbox" name="q9">女性で月経不順や貧血がある</label></div>
+    <div class="question"><label><input type="checkbox" name="q10">ストレスや過労で痛みが悪化する</label></div>
+    <div class="question"><label><input type="checkbox" name="q11">慢性的に肩こり・腰痛がある</label></div>
+    <div class="question"><label><input type="checkbox" name="q12">朝に手のこわばりを感じる</label></div>
 
     <button type="button" onclick="analyze()">診断する</button>
   </form>
 
   <h2>結果</h2>
-  <div id="result"></div>
+  <div id="result" style="font-size:1.2em;"></div>
 
   <script>
     function analyze() {
       const form = document.forms["checkForm"];
       let score = 0;
-      for (let i = 1; i <= 14; i++) {
-        if (form["q" + i].checked) score++;
-      }
+      let cold = form.q2.checked || form.q3.checked || form.q8.checked;
+      let fatigue = form.q1.checked && form.q4.checked;
+      let stiffness = form.q5.checked || form.q12.checked;
+      let blood_def = form.q7.checked || form.q9.checked;
+      let complex = form.q10.checked && form.q11.checked;
 
-      let resultText = "";
-      if (score <= 4) {
-        resultText = "比較的軽度の腱鞘炎です。日常の姿勢改善や休息でも回復が期待できます。漢方は必要ないか、ごく軽度の補助として使う程度でしょう。";
-      } else if (score <= 8) {
-        resultText = "血行不良や疲労の蓄積による腱鞘炎の可能性があります。「桂枝加朮附湯」や「当帰芍薬散」などが体質改善に役立つ場合があります。";
-      } else {
-        resultText = "慢性炎症や体質的な要因が強く関与している可能性があります。「疎経活血湯」などの血流改善を主眼とした漢方の検討をおすすめします。必要に応じて専門家に相談を。";
+      let resultText = "おすすめの漢方薬：\n";
+
+      if (cold && form.q4.checked) resultText += "・桂枝加朮附湯（冷え＋体力低下）\n";
+      if (fatigue && stiffness) resultText += "・独活葛根湯（筋疲労・こわばり）\n";
+      if (form.q6.checked || form.q11.checked) resultText += "・疎経活血湯（慢性痛・血行不良）\n";
+      if (blood_def) resultText += "・当帰芍薬散（女性・むくみ・冷え）\n";
+      if (complex) resultText += "・五積散（多症状型）\n";
+
+      if (resultText === "おすすめの漢方薬：\n") {
+        resultText = "該当する処方は見つかりませんでした。症状や体質の傾向が少ないか軽度の可能性があります。";
       }
 
       document.getElementById("result").textContent = resultText;
