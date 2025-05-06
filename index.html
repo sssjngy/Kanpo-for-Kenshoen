@@ -3,15 +3,26 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>腱鞘炎タイプチェック</title>
+  <title>腱鞘炎に効く漢方薬のチェック</title>
   <style>
-    body { font-family: sans-serif; padding: 2em; max-width: 600px; margin: auto; }
+    body { font-family: sans-serif; padding: 2em; max-width: 700px; margin: auto; }
     .question { margin-bottom: 1em; }
+    .kanpo-list { background-color: #eef; padding: 1em; border-radius: 8px; margin-bottom: 2em; }
     button { padding: 0.5em 1em; }
   </style>
 </head>
 <body>
-  <h1>腱鞘炎タイプチェック（漢方アドバイス）</h1>
+  <h1>腱鞘炎に効く漢方薬のチェック</h1>
+
+  <div class="kanpo-list">
+    <h2>代表的な漢方薬一覧</h2>
+    <ul>
+      <li>桂枝加朮附湯（冷えや慢性の痛みに）</li>
+      <li>当帰芍薬散（血行不良やむくみ、女性体質に）</li>
+      <li>疎経活血湯（痛み・しびれ・血流障害に）</li>
+    </ul>
+  </div>
+
   <form id="checkForm">
     <div class="question">1. 冷えると腱鞘炎の痛みが強くなる<br><input type="checkbox" name="q1"></div>
     <div class="question">2. 温めると症状がやわらぐ<br><input type="checkbox" name="q2"></div>
@@ -23,6 +34,12 @@
     <div class="question">8. 手足の冷えやむくみがある<br><input type="checkbox" name="q8"></div>
     <div class="question">9. ストレスや睡眠不足で悪化しやすい<br><input type="checkbox" name="q9"></div>
     <div class="question">10. 月経痛や冷え症などもある（女性）<br><input type="checkbox" name="q10"></div>
+    <!-- 追加の具体的な症状 -->
+    <div class="question">11. 指の腫れ・圧痛がある<br><input type="checkbox" name="q11"></div>
+    <div class="question">12. 朝に手のこわばりを感じる<br><input type="checkbox" name="q12"></div>
+    <div class="question">13. 動かし始めに痛みが強いが、動かしていると軽くなる<br><input type="checkbox" name="q13"></div>
+    <div class="question">14. 関節に熱感がある（熱っぽい）<br><input type="checkbox" name="q14"></div>
+
     <button type="button" onclick="analyze()">診断する</button>
   </form>
 
@@ -33,14 +50,14 @@
     function analyze() {
       const form = document.forms["checkForm"];
       let score = 0;
-      for (let i = 1; i <= 10; i++) {
+      for (let i = 1; i <= 14; i++) {
         if (form["q" + i].checked) score++;
       }
 
       let resultText = "";
-      if (score <= 3) {
+      if (score <= 4) {
         resultText = "比較的軽度の腱鞘炎です。日常の姿勢改善や休息でも回復が期待できます。漢方は必要ないか、ごく軽度の補助として使う程度でしょう。";
-      } else if (score <= 6) {
+      } else if (score <= 8) {
         resultText = "血行不良や疲労の蓄積による腱鞘炎の可能性があります。「桂枝加朮附湯」や「当帰芍薬散」などが体質改善に役立つ場合があります。";
       } else {
         resultText = "慢性炎症や体質的な要因が強く関与している可能性があります。「疎経活血湯」などの血流改善を主眼とした漢方の検討をおすすめします。必要に応じて専門家に相談を。";
